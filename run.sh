@@ -16,7 +16,7 @@ BASE="$( basename "$URL" )"
 wget -O "$BASE" "$URL" || die
 tar xJf "$BASE"			# folder 'debian'
 
-cd *.17 || die
+cd ./*.17 || die
 RC=0
 for FILE in ../debian/patches/*.patch; do echo "# $FILE"; patch -p1 <"$FILE" && continue; RC=1; echo "# RC = 1"; done
 test $RC -eq 0 || die
