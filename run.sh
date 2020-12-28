@@ -19,7 +19,10 @@ download()
 }
 
 GITBASE="$( pwd )"
-FOLDER="$( mktemp -d )" || die
+FOLDER="$( mktemp -d )" || {
+	FOLDER="foo.$$"
+	mkdir "$FOLDER" || die
+}
 cd "$FOLDER" || die
 echo "# [OK] working in folder: '$FOLDER'"
 
