@@ -6,14 +6,16 @@ FOLDER="$( mktemp -d )" || die
 cd "$FOLDER" || die
 echo "# [OK] working in folder: '$FOLDER'"
 
-URL='http://deb.debian.org/debian/pool/main/s/slirp/slirp_1.0.17.orig.tar.gz'
+# URL='http://deb.debian.org/debian/pool/main/s/slirp/slirp_1.0.17.orig.tar.gz'
+URL='https://github.com/bittorf/slirp-uml-and-compiler-friendly/raw/main/slirp_1.0.17.orig.tar.gz'
 BASE="$( basename "$URL" )"
-wget -O "$BASE" "$URL" || die
+wget --no-check-certificate -O "$BASE" "$URL" || die
 tar xzf "$BASE"			# folder 'slirp_1.0.17'
 
-URL='http://deb.debian.org/debian/pool/main/s/slirp/slirp_1.0.17-11.debian.tar.xz'
+# URL='http://deb.debian.org/debian/pool/main/s/slirp/slirp_1.0.17-11.debian.tar.xz'
+URL='https://github.com/bittorf/slirp-uml-and-compiler-friendly/raw/main/slirp_1.0.17-11.debian.tar.gz'
 BASE="$( basename "$URL" )"
-wget -O "$BASE" "$URL" || die
+wget --no-check-certificate -O "$BASE" "$URL" || die
 tar xJf "$BASE"			# folder 'debian'
 
 cd ./*.17 || die
