@@ -44,7 +44,8 @@ test $RC -eq 0 || die
 cd src || die
 ./configure || die
 echo '#define FULL_BOLT' >>config.h 
-sed -i 's/^CFLAGS .*/& -std=gnu89/' Makefile || exit
+sed 's/^CFLAGS .*/& -std=gnu89/' Makefile >Makefile.patched || die
+cp -v Makefile.patched Makefile || die
 
 make || die
 
