@@ -21,4 +21,5 @@ gcc (Debian 8.3.0-6) 8.3.0
 gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516
 gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
 gcc (Ubuntu 4.4.3-4ubuntu5) 4.4.3
+gcc (SUSE Linux) 4.3.2 [gcc-4_3-branch revision 141291]
 ```
