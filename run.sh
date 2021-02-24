@@ -39,6 +39,7 @@ download
 tar xzf "$BASE"			# folder 'debian'
 
 cd ./*.17 || die
+
 RC=0
 for FILE in ../debian/patches/*.patch; do echo "# $FILE"; patch -p1 <"$FILE" && continue; RC=1; echo "# RC = 1"; done
 test $RC -eq 0 || die
@@ -56,6 +57,8 @@ strip -o slirp.stripped slirp
 strip -o slirp.stripped_full -s slirp
 
 echo
-echo "# [OK] everything worked, see folder '$FOLDER' and '$( pwd )'"
+echo "# [OK] everything worked, see folder '$FOLDER' and '$PWD'"
 ls -l slirp slirp.*
 
+BIN="$PWD/slirp"
+[ -x "$BIN" ] && echo "SLIRP_BIN='$BIN'"
