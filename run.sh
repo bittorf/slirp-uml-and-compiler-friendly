@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# *hellcheck --shell=dash run.sh
 
 OPTION="$1"	# <empty> or 'quiet'
 
@@ -53,8 +55,9 @@ cp -v Makefile.patched Makefile || die
 
 make || die
 
-strip -o slirp.stripped slirp
-strip -o slirp.stripped_full -s slirp
+export STRIP="${STRIP:-strip}"
+$STRIP -o slirp.stripped slirp
+$STRIP -o slirp.stripped_full -s slirp
 
 echo
 echo "# [OK] everything worked, see folder '$FOLDER' and '$PWD'"
