@@ -1,5 +1,7 @@
 #!/bin/sh
 
+OPTION="$1"	# <empty> or 'quiet'
+
 die()
 {
 	echo
@@ -43,6 +45,7 @@ test $RC -eq 0 || die
 
 cd src || die
 ./configure || die
+[ "$OPTION" = 'quiet' ] && { sed -i 's|\(^.*lprint("\).*\(".*\)|\1\2|' main.c || exit; }
 echo '#define FULL_BOLT' >>config.h 
 sed 's/^CFLAGS .*/& -std=gnu89/' Makefile >Makefile.patched || die
 cp -v Makefile.patched Makefile || die
