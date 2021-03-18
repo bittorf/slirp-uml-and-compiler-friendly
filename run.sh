@@ -3,6 +3,8 @@
 # *hellcheck --shell=dash run.sh
 
 OPTION="$1"	# <empty> or 'quiet'
+		# via ENV: MYCC=static
+		#     and: CC=/path/to/cc
 
 die()
 {
@@ -47,13 +49,27 @@ for FILE in ../debian/patches/*.patch; do echo "# $FILE"; patch -p1 <"$FILE" && 
 test $RC -eq 0 || die
 
 cd src || die
-./configure || die
+
+if [ "$MYCC" = static ]; then
+	sed -i 's/LIBS="-lnsl $LIBS/# FII &/' configure
+	./configure --disable-ppp || die
+else
+	./configure || die
+fi
+
 [ "$OPTION" = 'quiet' ] && { sed -i 's|\(^.*lprint("\).*\(".*\)|\1\2|' main.c || exit; }
 echo '#define FULL_BOLT' >>config.h 
 sed 's/^CFLAGS .*/& -std=gnu89/' Makefile >Makefile.patched || die
 cp -v Makefile.patched Makefile || die
 
-make || die
+[ "$MYCC" = static ] && sed -i 's|# include <sys/bitypes.h>||' slirp.h || exit
+[ "$MYCC" = static ] && sed -i 's|#include "debug.h"|&\n#define MIN(a,b) (((a)<(b))?(a):(b))\n|' misc.c || exit
+
+if [ "$MYCC" = static ]; then
+	make "CC=$CC -static" || die
+else
+	make || die
+fi
 
 export STRIP="${STRIP:-strip}"
 $STRIP -o slirp.stripped slirp
