@@ -53,7 +53,7 @@ cd src || die
 
 if [ "$MYCC" = static ]; then
 	sed -i 's/LIBS="-lnsl $LIBS/# FII &/' configure
-	./configure $CONF_HOST --disable-ppp || die
+	CC= ./configure $CONF_HOST --disable-ppp || die
 else
 	./configure $CONF_HOST || die
 fi
