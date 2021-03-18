@@ -5,6 +5,7 @@
 OPTION="$1"	# <empty> or 'quiet'
 		# via ENV: MYCC=static
 		#     and: CC=/path/to/cc
+		#     and: CONF_HOST= e.g. --host=x86_64-linux-musl
 
 die()
 {
@@ -52,9 +53,9 @@ cd src || die
 
 if [ "$MYCC" = static ]; then
 	sed -i 's/LIBS="-lnsl $LIBS/# FII &/' configure
-	./configure --disable-ppp || die
+	./configure $CONF_HOST --disable-ppp || die
 else
-	./configure || die
+	./configure $CONF_HOST || die
 fi
 
 [ "$OPTION" = 'quiet' ] && { sed -i 's|\(^.*lprint("\).*\(".*\)|\1\2|' main.c || exit; }
