@@ -53,7 +53,9 @@ cd src || die
 
 if [ "$MYCC" = static ]; then
 	sed -i 's/LIBS="-lnsl $LIBS/# FII &/' configure
-	CC= ./configure $CONF_HOST --disable-ppp || die
+	sed -i '/novm/d' "$( find . -type f -name ppp.h )"	# seems double defined
+#	CC= ./configure $CONF_HOST --disable-ppp || die
+	CC= ./configure $CONF_HOST || die
 else
 	./configure $CONF_HOST || die
 fi
