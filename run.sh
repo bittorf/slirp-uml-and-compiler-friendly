@@ -69,7 +69,7 @@ cp -v Makefile.patched Makefile || die
 [ "$MYCC" = static ] && sed -i 's|#include "debug.h"|&\n#define MIN(a,b) (((a)<(b))?(a):(b))\n|' misc.c || exit
 
 if [ "$MYCC" = static ]; then
-	make "CC=$CC -static" || die
+	make "CC=${CC:-cc} -static" || die
 else
 	make || die
 fi
